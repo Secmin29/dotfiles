@@ -1,7 +1,14 @@
 #! /bin/sh
 
 # formal numerals now
-bspc monitor -d 1 2 3 4 5 6 7 8 9 10 
+if [ $(xrandr -q | grep -E '^DP1\-1.*' | awk '{ print $2 }') == "connected" ]
+then
+    bspc monitor "DP1-1" -d 1 2 3 4 5
+    bspc monitor "eDP1" -d 6 7 8 9 0
+    autorandr --load dock-vertical
+else
+    bspc monitor -d 1 2 3 4 5 6 7 8 9 10
+fi
 
 background=$(xrdb -query | grep "background" | cut -f2 | sed -r 's/#//' | head -n 1)
 foreground=$(xrdb -query | grep "foreground" | cut -f2 | sed -r 's/#//' | head -n 1)
@@ -40,9 +47,19 @@ bspc config presel_feedback_color "#$color1"
 
 # Autostart
 #bspwm_colors.sh &
+setxkbmap dvorak
+# pgrep redshift &> /dev/null || redshift &> /dev/null &
+systemctl --user enable --now redshift.service
 compton &
+xmodmap -e 'clear Lock'
+xmodmap -e 'keycode 0x42=Escape'
+xbindkeys
+mopidy &
+light-locker &
 #wal -i $HOME/wallpapers/lava-with-cherry-tree.-1920×1080.jpg -a 85
-wpg --theme $HOME/.config/wpg/schemes/_home_alex__config_wpg_wallpapers_enter-the-unknown-1920×1080_jpg_dark_wal__1.1.0.json --alpha 85
-#blurwal -m 1 &
+wpg --theme $HOME/.config/wpg/schemes/_home_alex__config_wpg_wallpapers_forest-tree-housejapan-1920×1080_jpg_dark_wal__1.1.0.json --alpha 85
+#blurwal -m 1 -b 15 -s 5 --backend feh >> $HOME/blurwal.log 2>&1 &
 $HOME/.config/polybar/launch.sh
+#nextcloud &
+sxhkd &
 bash "$HOME/.config/bspwm/bspwm_colors.sh" &

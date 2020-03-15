@@ -21,7 +21,7 @@ super + Return
 
 # program launcher
 super + space
-	dmenu_extended_run	
+    rofi -show run	
 
 # make sxhkd reload its configuration files:
 super + Escape
@@ -50,6 +50,10 @@ super + y
 # swap the current node and the biggest node
 super + g
 	bspc node -s biggest
+
+# lock desktop
+ctrl + alt  + l
+    light-locker-command -l
 
 #
 # state/flags
