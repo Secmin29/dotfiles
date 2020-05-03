@@ -1,0 +1,29 @@
+directory: ~/Music
+library: ~/data/musiclibrary.blb
+plugins: inline convert missing acousticbrainz replaygain lyrics lastgenre fetchart
+original_date: yes
+import:
+    move: yes
+paths:
+  default: $albumartist/$album%aunique{}/$disc_and_track $title
+  singleton: Non-Album/$artist/$title
+  comp: Various Artists/$album%aunique{}/$disc_and_track $title
+convert:
+  never_convert_lossy_files: yes
+  copy_album_art: yes
+  command: /home/alex/bin/gapless.sh $source $dest
+  extension: mp3
+item_fields:
+  disc_and_track: u'%01i-%02i' % (disc, track) if
+                  disctotal > 1 else u'%02i' % (track)
+replaygain:
+  auto: no 
+  backend: gstreamer
+lyrics:
+  auto: yes
+  google_API_key: AIzaSyAOzH8gFqZQgKqQe3XDOJeTBYuJcfZOUsw
+fetchart:
+  auto: yes
+  cautious: yes
+  enforce_ratio: yes
+

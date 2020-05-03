@@ -52,8 +52,11 @@ super + g
 	bspc node -s biggest
 
 # lock desktop
-ctrl + alt  + l
-    light-locker-command -l
+# Use this if I go back to lightdm
+# ctrl + alt  + l
+#     light-locker-command -l
+ctrl + alt + l
+    i3lock-fancy -p
 
 #
 # state/flags

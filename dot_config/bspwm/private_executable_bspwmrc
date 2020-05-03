@@ -7,7 +7,7 @@ then
     bspc monitor "eDP1" -d 6 7 8 9 0
     autorandr --load dock-vertical
 else
-    bspc monitor -d 1 2 3 4 5 6 7 8 9 10
+    bspc monitor "eDP1" -d 1 2 3 4 5 6 7 8 9 10
 fi
 
 background=$(xrdb -query | grep "background" | cut -f2 | sed -r 's/#//' | head -n 1)
@@ -54,7 +54,8 @@ compton &
 xmodmap -e 'clear Lock'
 xmodmap -e 'keycode 0x42=Escape'
 xbindkeys
-mopidy &
+# mopidy &
+mpd &
 light-locker &
 #wal -i $HOME/wallpapers/lava-with-cherry-tree.-1920×1080.jpg -a 85
 wpg --theme $HOME/.config/wpg/schemes/_home_alex__config_wpg_wallpapers_forest-tree-housejapan-1920×1080_jpg_dark_wal__1.1.0.json --alpha 85
