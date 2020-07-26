@@ -1,13 +1,14 @@
 #! /bin/sh
 
 # formal numerals now
-if [ $(xrandr -q | grep -E '^DP1\-1.*' | awk '{ print $2 }') == "connected" ]
+if [ $(xrandr -q | grep -E '^DP1\-2.*' | awk '{ print $2 }') == "connected" ]
 then
-    bspc monitor "DP1-1" -d 1 2 3 4 5
+    bspc monitor "DP1-2" -d 1 2 3 4 5
     bspc monitor "eDP1" -d 6 7 8 9 0
-    autorandr --load dock-vertical
+    ${HOME}/.screenlayout/widescreen-dock.sh
 else
     bspc monitor "eDP1" -d 1 2 3 4 5 6 7 8 9 10
+    ${HOME}/.screenlayout/laptop-only.sh
 fi
 
 background=$(xrdb -query | grep "background" | cut -f2 | sed -r 's/#//' | head -n 1)
@@ -49,13 +50,14 @@ bspc config presel_feedback_color "#$color1"
 #bspwm_colors.sh &
 setxkbmap dvorak
 # pgrep redshift &> /dev/null || redshift &> /dev/null &
-systemctl --user enable --now redshift.service
+systemctl --user start redshift.service
+systemctl --user start mpd.service
 compton &
 xmodmap -e 'clear Lock'
 xmodmap -e 'keycode 0x42=Escape'
 xbindkeys
 # mopidy &
-mpd &
+# mpd &
 light-locker &
 #wal -i $HOME/wallpapers/lava-with-cherry-tree.-1920×1080.jpg -a 85
 wpg --theme $HOME/.config/wpg/schemes/_home_alex__config_wpg_wallpapers_forest-tree-housejapan-1920×1080_jpg_dark_wal__1.1.0.json --alpha 85
